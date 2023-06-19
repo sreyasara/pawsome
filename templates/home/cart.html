@@ -1,0 +1,96 @@
+{% extends "home/base.html" %}
+
+{% block  contents %}
+    <!-- Start Banner Area -->
+    <section class="banner-area organic-breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+                <div class="col-first">
+                    <h1>Shopping Cart</h1>
+                    <nav class="d-flex align-items-center">
+                        <a href="/">Home<span class="lnr lnr-arrow-right"></span></a>
+                        <a href="">Cart</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Banner Area -->
+
+    <!--================Cart Area =================-->
+    <section class="cart_area">
+        <div class="container">
+            <div class="cart_inner">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col"><h2>Pet</h2></th>
+                            <th scope="col"><h2>Total</h2></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in cart.items.all %}
+                            <tr>
+                                <td>
+                                    <div class="media">
+                                        <div class="d-flex">
+                                            <img src="{{ item.item.image.url }}" alt="">
+                                        </div>
+                                        <div class="media-body">
+                                            <h3>{{ item.item.name }}</h3>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <h4>{{ item.price }}</h4>
+                                </td>
+                                <td>
+                                    <a href="{% url 'remove_from_cart' item.item.id %}"><i
+                                            class="fa fa-close " style="color:red; font-size: 25px;"
+                                    ></i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        <tr>
+                            <td>
+
+                            </td>
+                            <td>
+
+                            </td>
+                            <td>
+                                <h5>Subtotal</h5>
+                            </td>
+                            <td>
+                                <h5>{{ cart.total }}</h5>
+                            </td>
+                        </tr>
+                        <tr class="out_button_area">
+                            <td>
+
+                            </td>
+                            <td>
+                                {% if cart.items.all %}
+                                    <a class="primary-btn" href="/checkout/">Proceed to checkout</a>
+
+                                {% endif %}
+                            </td>
+
+                            <td>
+
+                            </td>
+                            <td>
+
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--================End Cart Area =================-->
+
+{% endblock %}

@@ -1,0 +1,84 @@
+{% extends "home/base.html" %}
+
+{% block  contents %}
+    <!-- Start Banner Area -->
+    <section class="banner-area organic-breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+                <div class="col-first">
+                    <h1>Confirmation</h1>
+                    <nav class="d-flex align-items-center">
+                        <a href="/">Home<span class="lnr lnr-arrow-right"></span></a>
+                        <a href="">Confirmation</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Banner Area -->
+
+    <!--================Order Details Area =================-->
+    <section class="order_details section_gap">
+        <div class="container">
+            <h3 class="title_confirmation">Thank you. Your order has been received.</h3>
+            <div class="row order_d_inner">
+                <div class="col-lg-6">
+                    <div class="details_item">
+                        <h4>Order Info</h4>
+                        <ul class="list">
+                            <li><a href="#"><span>Order number</span> : {{ order.id }}</a></li>
+                            <li><a href="#"><span>Date</span> : {{ order.date }}</a></li>
+                            <li><a href="#"><span>Total</span> : {{ order.total_price }}</a></li>
+                            <li><a href="#"><span>Delivery status</span> : {{ order.status }}</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="details_item">
+                        <h4>Billing Address</h4>
+                        <ul class="list">
+                            <li><a href="#"><span>Address line 1</span> : {{ order.address.address_line_1 }}</a></li>
+                            <li><a href="#"><span>Address line 2</span> : {{ order.address.address_line_2 }}</a></li>
+                            <li><a href="#"><span>District</span> : {{ order.address.district }}</a></li>
+                            <li><a href="#"><span>Postcode </span> : {{ order.address.zip_code }}</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="order_details_table">
+                <h2>Order Details</h2>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Product</th>
+                            <th scope="col">Total</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in order.order_items.all %}
+                            <tr>
+                                <td>
+                                    <p>{{ item.item.name }}</p>
+                                </td>
+                                <td>
+                                    <p>{{ item.price }}</p>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        <td>
+                            <h4>Total</h4>
+                        </td>
+                        <td>
+                            <p>{{ order.total_price }}</p>
+                        </td>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--================End Order Details Area =================-->
+
+{% endblock %}

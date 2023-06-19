@@ -1,0 +1,158 @@
+[
+  {
+    "model": "home.category",
+    "pk": 1,
+    "fields": {
+      "name": "Dogs",
+      "description": "Various breeds of dogs"
+    }
+  },
+  {
+    "model": "home.pet",
+    "pk": 1,
+    "fields": {
+      "name": "Labrador Retriever",
+      "category": 1,
+      "price": 500.0,
+      "description": "Friendly and outgoing",
+      "image": "pet_images/labrador.jpg",
+      "stock": 10,
+
+      "discount": 0
+    }
+  },
+  {
+    "model": "home.pet",
+    "pk": 2,
+    "fields": {
+      "name": "German Shepherd",
+      "category": 1,
+      "price": 600.0,
+      "description": "Intelligent and loyal",
+      "image": "pet_images/german_shepherd.jpg",
+      "stock": 8,
+
+      "discount": 0
+    }
+  },
+  {
+    "model": "home.pet",
+    "pk": 3,
+    "fields": {
+      "name": "Golden Retriever",
+      "category": 1,
+      "price": 550.0,
+      "description": "Friendly and intelligent",
+      "image": "pet_images/golden_retriever.jpg",
+      "stock": 5,
+
+      "discount": 50
+    }
+  },
+  {
+    "model": "home.pet",
+    "pk": 4,
+    "fields": {
+      "name": "Bulldog",
+      "category": 1,
+      "price": 400.0,
+      "description": "Strong and determined",
+      "image": "pet_images/bulldog.jpg",
+      "stock": 12,
+
+      "discount": 30
+    }
+  },
+  {
+    "model": "home.pet",
+    "pk": 5,
+    "fields": {
+      "name": "Poodle",
+      "category": 1,
+      "price": 450.0,
+      "description": "Intelligent and active",
+      "image": "pet_images/poodle.jpg",
+      "stock": 6,
+
+      "discount": 10
+    }
+  },
+  {
+    "model": "home.category",
+    "pk": 2,
+    "fields": {
+      "name": "Cats",
+      "description": "Different breeds of cats"
+    }
+  },
+  {
+    "model": "home.pet",
+    "pk": 6,
+    "fields": {
+      "name": "Persian",
+      "category": 2,
+      "price": 400.0,
+      "description": "Fluffy and docile",
+      "image": "pet_images/persian.jpg",
+      "stock": 5,
+
+      "discount": 0
+    }
+  },
+  {
+    "model": "home.pet",
+    "pk": 7,
+    "fields": {
+      "name": "Siamese",
+      "category": 2,
+      "price": 350.0,
+      "description": "Elegant and vocal",
+      "image": "pet_images/siamese.jpg",
+      "stock": 3,
+
+      "discount": 10
+    }
+  },
+  {
+    "model": "home.pet",
+    "pk": 8,
+    "fields": {
+      "name": "Maine Coon",
+      "category": 2,
+      "price": 450.0,
+      "description": "Large and sociable",
+      "image": "pet_images/maine_coon.jpg",
+      "stock": 7,
+
+      "discount": 0
+    }
+  },
+  {
+    "model": "home.pet",
+    "pk": 9,
+    "fields": {
+      "name": "Bengal",
+      "category": 2,
+      "price": 500.0,
+      "description": "Athletic and playful",
+      "image": "pet_images/bengal.jpg",
+      "stock": 4,
+
+      "discount": 0
+    }
+  },
+  {
+    "model": "home.pet",
+    "pk": 10,
+    "fields": {
+      "name": "Scottish Fold",
+      "category": 2,
+      "price": 400.0,
+      "description": "Unique folded ears",
+      "image": "pet_images/scottish_fold.jpg",
+      "stock": 6,
+
+      "discount": 40
+    }
+  }
+]

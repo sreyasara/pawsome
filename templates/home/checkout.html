@@ -1,0 +1,98 @@
+{% extends "home/base.html" %}
+
+{% block  contents %}
+    <!-- Start Banner Area -->
+    <section class="banner-area organic-breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+                <div class="col-first">
+                    <h1>Checkout</h1>
+                    <nav class="d-flex align-items-center">
+                        <a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
+                        <a href="single-product.html">Checkout</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Banner Area -->
+
+    <!--================Checkout Area =================-->
+    <section class="checkout_area section_gap">
+        <div class="container">
+            <div class="billing_details">
+                <div class="row">
+                    <form class="row contact_form" action="" method="post" novalidate="novalidate">
+                        {% csrf_token %}
+
+                        <div class="col-lg-8">
+                            <p style="color: #ec5050">{{ form.errors }}</p>
+
+                            <h3>Billing Details</h3>
+                            <div class="col-md-6 form-group p_star">
+                                <input type="text" class="form-control" id="first" name="first_name"
+                                       placeholder="first name">
+
+                            </div>
+                            <div class="col-md-6 form-group p_star">
+                                <input type="text" class="form-control" id="last" name="last_name"
+                                       placeholder="last name">
+                            </div>
+                            <div class="col-md-6 form-group p_star">
+                                <input type="text" class="form-control" id="number" name="phone_number"
+                                       placeholder="phone_number">
+                            </div>
+                            <div class="col-md-6 form-group p_star">
+                                <input type="text" class="form-control" id="email" name="email" placeholder="email">
+                            </div>
+                            <div class="col-md-12 form-group p_star">
+                                <input type="text" class="form-control" id="add1" name="address_line_1"
+                                       placeholder="address line 1">
+                            </div>
+                            <div class="col-md-12 form-group p_star">
+                                <input type="text" class="form-control" id="add2" name="address_line_2"
+                                       placeholder="address line 2">
+                            </div>
+                            <div class="col-md-12 form-group p_star">
+                                <input type="text" class="form-control" id="district" name="district"
+                                       placeholder="district">
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <input type="text" class="form-control" id="zip" name="zip_code"
+                                       placeholder="Postcode/ZIP">
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="order_box">
+                                <h2>Your Order</h2>
+                                <ul class="list">
+                                    <li class="my-2 "><a href="#">Product <span>Total</span></a></li>
+                                    {% for item in request.user.cart.items.all %}
+                                        <li><a href="#">{{ item.item.name }} <span
+                                                class="last">${{ item.price }}</span></a>
+                                        </li>
+                                    {% endfor %}
+
+                                </ul>
+                                <ul class="list list_2">
+                                    <li><a href="#">Total <span>{{ request.user.cart.total }}</span></a></li>
+                                </ul>
+
+                                <div class="creat_account">
+                                    <input type="checkbox" id="f-option4" name="selector">
+                                    <label for="f-option4">I’ve read and accept the </label>
+                                    <a href="#">terms & conditions*</a>
+                                </div>
+                                <button type="submit" class="primary-btn border-0" href="#">Proceed to Payment</button>
+                            </div>
+
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--================End Checkout Area =================-->
+
+{% endblock %}
