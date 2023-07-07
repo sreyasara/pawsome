@@ -31,35 +31,38 @@
                             <h3>Billing Details</h3>
                             <div class="col-md-6 form-group p_star">
                                 <input type="text" class="form-control" id="first" name="first_name"
-                                       placeholder="first name">
+                                       placeholder="first name" value="{{ address.first_name }}">
 
                             </div>
                             <div class="col-md-6 form-group p_star">
                                 <input type="text" class="form-control" id="last" name="last_name"
-                                       placeholder="last name">
+                                       placeholder="last name" value="{{ address.last_name }}">
                             </div>
                             <div class="col-md-6 form-group p_star">
                                 <input type="text" class="form-control" id="number" name="phone_number"
-                                       placeholder="phone_number">
+                                       placeholder="phone_number" value="{{ address.phone_number }}">
                             </div>
                             <div class="col-md-6 form-group p_star">
-                                <input type="text" class="form-control" id="email" name="email" placeholder="email">
+                                <input type="text" class="form-control" id="email" name="email" placeholder="email"
+                                       value="{{ request.user.email }}">
                             </div>
                             <div class="col-md-12 form-group p_star">
                                 <input type="text" class="form-control" id="add1" name="address_line_1"
-                                       placeholder="address line 1">
+                                       placeholder="address line 1" value="{{ address.address_line_1 }}">
                             </div>
                             <div class="col-md-12 form-group p_star">
                                 <input type="text" class="form-control" id="add2" name="address_line_2"
-                                       placeholder="address line 2">
+                                       placeholder="address line 2" value="{{ address.address_line_2 }}">
                             </div>
                             <div class="col-md-12 form-group p_star">
                                 <input type="text" class="form-control" id="district" name="district"
-                                       placeholder="district">
+                                       placeholder="district" value="{{ address.district }}">
                             </div>
                             <div class="col-md-12 form-group">
                                 <input type="text" class="form-control" id="zip" name="zip_code"
-                                       placeholder="Postcode/ZIP">
+                                       value="{{ address.zip_code }}"
+                                       placeholder="Postcode/ZIP"
+                                >
                             </div>
                         </div>
                         <div class="col-lg-4">

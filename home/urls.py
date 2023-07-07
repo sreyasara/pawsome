@@ -24,6 +24,7 @@ urlpatterns = [
     path('products/', views.ProductsView.as_view(), name='products'),
     # register pet view
     path('pet/<int:pk>/', views.PetView.as_view(), name='pet'),
+    path("search/", views.Search.as_view(), name="search"),
     # register cart view
     path('cart/', views.CartView.as_view(), name='cart'),
     # add to cart
@@ -33,6 +34,8 @@ urlpatterns = [
     path('checkout/', views.checkout, name='checkout'),
     # register order view
     path('order/<int:pk>/', views.specific_order, name='order'),
+    # register review view
+    path('review/<int:pk>/', views.review, name='review'),
 ]
 
 handler404 = 'home.views.error_404_view'

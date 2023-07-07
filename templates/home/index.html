@@ -3,24 +3,6 @@
 {% block contents %}
     <!-- start banner Area -->
 
-
-    <!------------------ Test Content ------------------------->
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <!-- ----------------------------Actual content --------------------->
-
-
     <section class="banner-area">
         <div class="container">
             <div class="row fullscreen align-items-center justify-content-start">
@@ -31,7 +13,8 @@
                             <div class="col-lg-5 col-md-6">
                                 <div class="banner-content">
                                     <h1>PAWSOME LAUNCH !</h1>
-                                    <p>Pawsome Launch is the ultimate destination for pet lovers to connecrt,discover and create a paradise for their furry friends</p>
+                                    <p>Pawsome Launch is the ultimate destination for pet lovers to connecrt,discover
+                                        and create a paradise for their furry friends</p>
 
                                 </div>
                             </div>
@@ -43,8 +26,8 @@
                                 <div class="banner-content">
                                     <h1>PAWSOME LAUNCH!</h1>
                                     <p>Pawsome Launch is the ultimate destination
-                                         for pet lovers to connecrt,discover and
-                                         create a paradise for their furry friends.</p>
+                                        for pet lovers to connecrt,discover and
+                                        create a paradise for their furry friends.</p>
                                 </div>
                             </div>
 
@@ -54,11 +37,11 @@
             </div>
         </div>
     </section>
-    
+
 
 
     <!-- End banner Area -->
-    
+
 
     <!-- start features Area -->
     <section class="features-area section_gap">
@@ -119,18 +102,21 @@
                     <div class="d-flex  justify-content-center">
                         <div class="text-center">
                             <div class="section-title">
-                                
-<figure class="snip1527 hover">
-    <div class="image"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/pr-sample24.jpg" alt="pr-sample24" /></div>
-    <figcaption>
-      <div class="date"><span class="day">{{category}}</span><span class="month">Nov</span></div>
-      <h3>{{category.name}}</h3>
-      <p>
-        {{category.description}}
-      </p>
-    </figcaption>
-    <a href="#"></a>
-  </figure>
+                                <a href="/products/?category={{ category.name }}">
+                                    <figure class="snip1527 hover">
+                                        <div class="image"><img src="{{ category.get_image_url }}" alt="pr-sample24"/>
+                                        </div>
+                                        <figcaption>
+                                            <div class="date"><span class="day">{{ category.count }}</span><span
+                                                    class="month">{{ category.name }}</span></div>
+                                            <h3>{{ category.name }}</h3>
+                                            <p>
+                                                {{ category.description }}
+                                            </p>
+                                        </figcaption>
+                                    </figure>
+                                </a>
+
                             </div>
                         </div>
                     </div>

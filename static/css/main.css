@@ -5827,6 +5827,7 @@ label {
   position: absolute;
   bottom: 0;
   z-index: 1;
+  color: #293b21;
 }
 
 .snip1527 figcaption:before {
@@ -5835,19 +5836,16 @@ label {
   bottom: 0;
   left: 0;
   right: 0;
-  background: #700877;
+  background: #87cb6d;
   content: '';
-  background: -moz-linear-gradient(90deg, #700877 0%, #ff2759 100%, #ff2759 100%);
-  background: -webkit-linear-gradient(90deg, #700877 0%, #ff2759 100%, #ff2759 100%);
-  background: linear-gradient(90deg, #700877 0%, #ff2759 100%, #ff2759 100%);
-  opacity: 0.8;
+  background: #87cb6d;
   z-index: -1;
 }
 
 .snip1527 .date {
   background-color: #fff;
   border-radius: 50%;
-  color: #700877;
+  color: #2d4f20;
   font-size: 18px;
   font-weight: 700;
   min-height: 48px;

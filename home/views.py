@@ -2,11 +2,11 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.views.generic import TemplateView
 from rest_framework import viewsets
 
-from .forms import AddressForm
+from .forms import AddressForm, ReviewForm
 from .permissions import IsAuthenticated, IsOwner
 from django.contrib.auth.decorators import login_required
 
-from home.models import Address, Category, Pet, CartItem, Cart, Order, OrderItem
+from home.models import Address, Category, Pet, CartItem, Cart, Order, OrderItem, Review
 from home.serializer import AddressSerializer
 
 
@@ -48,6 +48,7 @@ class PetView(TemplateView):
         pet_id = kwargs['pk']
         pet = get_object_or_404(Pet, pk=pet_id)
         context['pet'] = pet
+        context['reviews'] = pet.reviews.all()
         return context
 
 
@@ -81,6 +82,7 @@ def remove_from_cart(request, pk):
 
 @login_required(login_url='/login/')
 def checkout(request):
+    context = {}
     if request.method == 'POST':
         form = AddressForm(request.POST)
         if form.is_valid():
@@ -95,9 +97,14 @@ def checkout(request):
             cart.items.all().delete()
             return redirect(f'/order/{order.id}/')
         else:
-            return render(request, 'home/checkout.html', {'form': form})
+            return render(request, 'home/checkout.html', {'form': form, })
     else:
-        return render(request, 'home/checkout.html')
+        print(request.user)
+        if Address.objects.filter(user=request.user).exists():
+            address = Address.objects.filter(user=request.user).first()
+            print(address)
+            context = {"address": address}
+        return render(request, 'home/checkout.html', context)
 
 
 @login_required(login_url='/login/')
@@ -122,8 +129,13 @@ class ProductsView(TemplateView):
     # render index.html
 
     def get_context_data(self, **kwargs):
+        category = self.request.GET.get('category')
+
         context = super().get_context_data(**kwargs)
-        categories = Category.objects.all()
+        if category:
+            categories = Category.objects.filter(name=category)
+        else:
+            categories = Category.objects.all()
         context['categories'] = categories
         return context
 
@@ -131,3 +143,56 @@ class ProductsView(TemplateView):
         return self.render_to_response(self.get_context_data())
 
 
+class Search(TemplateView):
+    """
+    implement search with filetering
+    1) category
+    2) price min max
+    3) name search
+    4) vaccinated or not
+
+    """
+    template_name = 'home/search.html'
+
+    # render index.html
+
+    def get_context_data(self, **kwargs):
+        category = self.request.GET.get('category')
+        price_min = self.request.GET.get('price_min')
+        price_max = self.request.GET.get('price_max')
+        name = self.request.GET.get('name')
+        vaccinated = self.request.GET.get('vaccinated')
+
+        result = Pet.objects.all()
+        if category:
+            print(category)
+            result = result.filter(category__name=category)
+        if price_min:
+            result = result.filter(price__gte=price_min)
+        if price_max:
+            result = result.filter(price__lte=price_max)
+        if name:
+            result = result.filter(name__icontains=name)
+        if vaccinated:
+            result = result.filter(vaccinated=vaccinated == 'yes')
+        context = super().get_context_data(**kwargs)
+        context['products'] = result
+        context['categories'] = Category.objects.all()
+        return context
+
+    def get(self, request, *args, **kwargs):
+        return self.render_to_response(self.get_context_data())
+
+
+@login_required(login_url='/login/')
+def review(request, pk):
+    pet = get_object_or_404(Pet, pk=pk)
+    if request.method == 'POST':
+
+        comment = request.POST.get('comment')
+        rating = (request.POST.get('rate'))
+        print(comment, rating)
+        if comment and rating:
+            Review.objects.create(user=request.user, pet=pet, comment=comment, rating=rating)
+
+    return redirect(f'/pet/{pet.id}/')

@@ -4,6 +4,8 @@ from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
+from auth_login.models import User
+
 
 def create_order_id():
     # create order id in the format ORD00001 , ORD00002 etc
@@ -66,10 +68,17 @@ class Category(models.Model):
 
     @property
     def count(self):
-        return self.product.all
+        return self.pets.count()
+
+    @property
+    def get_image_url(self):
+        if self.pets.count() > 0:
+            return self.pets.first().image.url
+        return ''
 
 
 class Pet(models.Model):
+    seller = models.ForeignKey(User, on_delete=models.CASCADE, related_name='pets', blank=True, null=True)
     name = models.CharField(max_length=100)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='pets')
     price = models.FloatField(validators=[MinValueValidator(0.0)])
@@ -77,6 +86,10 @@ class Pet(models.Model):
     image = models.ImageField(upload_to='pet_images')
     stock = models.IntegerField(validators=[MinValueValidator(0)])
     discount = models.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(100.0)], default=0.0)
+    vaccinated = models.BooleanField(default=False)
+    vaccinated_certificate = models.ImageField(upload_to='pet_images', blank=True, null=True)
+    origin = models.CharField(max_length=100, blank=True, null=True)
+    age = models.IntegerField(validators=[MinValueValidator(0)], default=1)
 
     def __str__(self):
         return self.name
@@ -196,3 +209,26 @@ class CartItem(models.Model):
     @property
     def price(self):
         return self.item.get_discounted_price
+
+
+class Review(models.Model):
+    user = models.ForeignKey('auth_login.User', on_delete=models.CASCADE, blank=True, null=True)
+    pet = models.ForeignKey(Pet, on_delete=models.CASCADE, related_name='reviews', blank=True, null=True)
+    rating = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(5)])
+    comment = models.TextField()
+
+    def __str__(self):
+        return self.user.username + " " + self.pet.name
+
+    @property
+    def rating_string(self):
+        return "★" * self.rating + "☆" * (5 - self.rating)
+
+    @property
+    def user_name(self):
+        if self.user is None:
+            return "Anonymous"
+        if self.user.first_name is "" and self.user.last_name is "":
+            return self.user.username
+
+        return self.user.first_name + " " + self.user.last_name

@@ -4,6 +4,7 @@ from pprint import pprint
 from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import Group
 
 from home.models import Cart
 from .models import User
@@ -44,6 +45,7 @@ def signup(request):
         passwrd2 = request.POST.get("password2")
         username = request.POST.get("username", '')
         name = request.POST.get("name", '')
+        seller = request.POST.get("seller", False)
         first_name = name.split(' ')[0]
         if len(name.split(' ')) > 1:
             last_name = name.split(' ')[1]
@@ -59,12 +61,20 @@ def signup(request):
         else:
             if passwrd2 == password:
                 try:
+                    grp, _ = Group.objects.get_or_create(name='seller')
+
                     user = User.objects.create_user(email=email, password=password, username=username,
                                                     first_name=first_name, last_name=last_name)
-
+                    if seller:
+                        user.groups.add(grp)
+                        user.is_staff = True
+                    user.save()
                     login(request, user, backend='django.contrib.auth.backends.ModelBackend')
                     Cart.objects.create(user=user)
-                    redirect_location = request.GET.get('next', '/') + '?' + request.META['QUERY_STRING']
+                    if seller:
+                        redirect_location = '/seller/?' + request.META['QUERY_STRING']
+                    else:
+                        redirect_location = request.GET.get('next', '/') + '?' + request.META['QUERY_STRING']
                     return HttpResponseRedirect(redirect_location)
 
                 except User.DoesNotExist as e:
