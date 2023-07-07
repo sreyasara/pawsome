@@ -64,6 +64,10 @@ class Category(models.Model):
     class Meta:
         verbose_name_plural = 'Categories'
 
+    @property
+    def count(self):
+        return self.product.all
+
 
 class Pet(models.Model):
     name = models.CharField(max_length=100)

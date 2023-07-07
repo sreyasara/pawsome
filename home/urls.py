@@ -21,6 +21,7 @@ from home import views
 urlpatterns = [
     # register index view
     path('', views.IndexView.as_view(), name='index'),
+    path('products/', views.ProductsView.as_view(), name='products'),
     # register pet view
     path('pet/<int:pk>/', views.PetView.as_view(), name='pet'),
     # register cart view

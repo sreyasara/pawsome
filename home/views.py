@@ -114,3 +114,20 @@ def error_404_view(request, exception):
 
 def error_500_view(request):
     return render(request, '404.html')
+
+
+class ProductsView(TemplateView):
+    template_name = 'home/product.html'
+
+    # render index.html
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        categories = Category.objects.all()
+        context['categories'] = categories
+        return context
+
+    def get(self, request, *args, **kwargs):
+        return self.render_to_response(self.get_context_data())
+
+
