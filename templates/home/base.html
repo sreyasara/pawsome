@@ -61,6 +61,11 @@
                         <li class="nav-item"><a class="nav-link" href="/checkout">Checkout</a></li>
                         {% if user.is_authenticated %}
                             <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+                            {% if user.is_superuser %}
+                                <li class="nav-item"><a class="nav-link" href="/admin/">Admin</a></li>
+                            {% elif user.is_staff %}
+                                <li class="nav-item"><a class="nav-link" href="/seller/">Seller</a></li>
+                            {% endif %}
                         {% else %}
                             <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
                             <li class="nav-item"><a class="nav-link" href="/signup">Register</a></li>
@@ -69,15 +74,6 @@
                 </div>
             </div>
         </nav>
-    </div>
-    <div class="search_input" id="search_input_box">
-        <div class="container">
-            <form class="d-flex justify-content-between">
-                <input type="text" class="form-control" id="search_input" placeholder="Search Here">
-                <button type="submit" class="btn"></button>
-                <span class="lnr lnr-cross" id="close_search" title="Close Search"></span>
-            </form>
-        </div>
     </div>
 </header>
 {% block contents %}
