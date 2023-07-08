@@ -335,7 +335,18 @@
                     <div class="s_product_text">
                         <h3>{{ pet.name }}</h3>
                         <h2>{{ pet.get_discounted_price }}</h2>
+                        {% if pet.origin %}
+                            <span>Origin:{{ pet.origin }}</span><br>
+                        {% endif %}
+                        <span>Age:{{ pet.age }}</span><br>
 
+                        {% if pet.vaccinated_certificate %}
+                            Vaccination certificate:<br>
+                            <a href="{{ pet.vaccinated_certificate.url }}">
+                                <img src="{{ pet.vaccinated_certificate.url }}" width="200" alt="cert">
+
+                            </a>
+                        {% endif %}
                         <ul class="list">
                             <li><a class="active" href="#"><span>Category</span> {{ pet.category.name }}</a></li>
                             <li><span>Availability</span>{% if pet.is_available %} In Stock{% else %} Out of
