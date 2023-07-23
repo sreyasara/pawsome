@@ -2,11 +2,7 @@
 {% load static %}
 {% block contents %}
 
-    <div class="container">
-        <div class="row align-items-center justify-content-center" style="height: 100%;">
-            <!-- No content here, only the banner-area -->
-        </div>
-    </div>
+     
 
     <section style="padding-top: 10rem">
         <div class="resource-controls row">
@@ -65,6 +61,7 @@
     <!-- End banner Area -->
 
     <!-- start product Area -->
+
     <section class="">
 
         <div>
@@ -84,9 +81,17 @@
             {% else %}
                 <div class="row">
                     {% for product in products %}
+                    <style>
+                        .product-img {
+                            height: 250px; /* Set the desired fixed height for the images */
+                            object-fit: cover; /* Maintain aspect ratio while covering the container */
+                            width: 100%; /* Ensure the images occupy the entire container */
+                        }
+                    </style>
+                    
                         <div class="col-lg-3 col-md-6">
                             <div class="single-product">
-                                <img class="img-fluid" src="{{ product.image.url }}" alt="{{ product.name }}">
+                                <img class="img-fluid product-img" src="{{ product.image.url }}" alt="{{ product.name }}">
                                 <div class="product-details">
                                     <h6>{{ product.name }}</h6>
                                     <div class="price">
