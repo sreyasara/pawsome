@@ -45,6 +45,9 @@
                                 </td>
                                 <td>
                                     <h4>{{ item.price }}</h4>
+                                    {% if not item.item.is_available %}
+                                        <h5 style="color: red"> Out of stock</h5>
+                                    {% endif %}
                                 </td>
                                 <td>
                                     <a href="{% url 'remove_from_cart' item.item.id %}"><i

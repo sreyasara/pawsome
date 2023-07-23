@@ -349,8 +349,8 @@
                         {% endif %}
                         <ul class="list">
                             <li><a class="active" href="#"><span>Category</span> {{ pet.category.name }}</a></li>
-                            <li><span>Availability</span>{% if pet.is_available %} In Stock{% else %} Out of
-                                Stock{% endif %}</li>
+                            <li><span>Availability</span>{% if pet.is_available %} In Stock{% else %} <span style="color:#ff0000;">Out of
+                                Stock{% endif %}</span></li>
                         </ul>
                         <p>{{ pet.description }}</p>
                     
