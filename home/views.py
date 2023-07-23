@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.views.generic import TemplateView
 from rest_framework import viewsets
 
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import AddressForm, ReviewForm
 from .permissions import IsAuthenticated, IsOwner
 from django.contrib.auth.decorators import login_required
@@ -52,13 +53,14 @@ class PetView(TemplateView):
         return context
 
 
-class CartView(TemplateView):
+class CartView(LoginRequiredMixin, TemplateView):
     template_name = 'home/cart.html'
-
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['cart'] = self.request.user.cart
         return context
+
 
 
 @login_required(login_url='/login/')
@@ -162,7 +164,8 @@ class Search(TemplateView):
         price_max = self.request.GET.get('price_max')
         name = self.request.GET.get('name')
         vaccinated = self.request.GET.get('vaccinated')
-
+        search = category or price_max or price_min or name or vaccinated
+        
         result = Pet.objects.all()
         if category:
             print(category)
@@ -176,7 +179,8 @@ class Search(TemplateView):
         if vaccinated:
             result = result.filter(vaccinated=vaccinated == 'yes')
         context = super().get_context_data(**kwargs)
-        context['products'] = result
+        context['products'] =result if search  else False
+        context['search'] = search
         context['categories'] = Category.objects.all()
         return context
 

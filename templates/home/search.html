@@ -62,7 +62,15 @@
     <section class="">
 
         <div>
-            {% if not products %}
+                 
+            {% if not search %}
+                <div class="col-12 d-flex justify-content-center align-items-center flex-column p-5 m-5">
+                    <img src="{% static "img/pet/dog_search.jpeg" %}" alt="logo" width="500px">
+                    <h2>Search pets</h2>
+                </div>
+          
+
+            {% elif not products %}
                 <div class="col-12 d-flex justify-content-center align-items-center flex-column p-5 m-5">
                     <img src="{% static "img/pet/not_found.png" %}" alt="logo">
                     <h2>No pets found</h2>
