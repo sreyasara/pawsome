@@ -55,12 +55,11 @@ class PetView(TemplateView):
 
 class CartView(LoginRequiredMixin, TemplateView):
     template_name = 'home/cart.html'
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['cart'] = self.request.user.cart
         return context
-
 
 
 @login_required(login_url='/login/')
@@ -93,15 +92,32 @@ def checkout(request):
             address.save()
             cart = request.user.cart
             cart_items = cart.items.all()
-            order = Order.objects.create(user=request.user, address=address)
+            # check stock and remove from cart if stock is 0
             for item in cart_items:
-                OrderItem.objects.create(order=order, item=item.item)
-            cart.items.all().delete()
-            return redirect(f'/order/{order.id}/')
+                if item.item.stock < 1:
+                    form.errors['error'] = "One or more items in your cart are out of stock"
+            else:
+                order = Order.objects.create(user=request.user, address=address)
+                for item in cart_items:
+                    item.item.stock -= 1
+                    item.item.save()
+                    OrderItem.objects.create(order=order, item=item.item)
+                cart.items.all().delete()
+                return redirect(f'/order/{order.id}/')
+
         else:
             return render(request, 'home/checkout.html', {'form': form, })
     else:
         print(request.user)
+        print("checkout get")
+        cart = request.user.cart
+        cart_items = cart.items.all()
+        # check stock and remove from cart if stock is 0
+        for item in cart_items:
+            print(item.item.stock, item.item.name, "stock")
+            if item.item.stock < 1:
+                print(item.item.stock, item.item.name, "stock")
+                return redirect('cart')
         if Address.objects.filter(user=request.user).exists():
             address = Address.objects.filter(user=request.user).first()
             print(address)
@@ -165,7 +181,7 @@ class Search(TemplateView):
         name = self.request.GET.get('name')
         vaccinated = self.request.GET.get('vaccinated')
         search = category or price_max or price_min or name or vaccinated
-        
+
         result = Pet.objects.all()
         if category:
             print(category)
@@ -179,7 +195,7 @@ class Search(TemplateView):
         if vaccinated:
             result = result.filter(vaccinated=vaccinated == 'yes')
         context = super().get_context_data(**kwargs)
-        context['products'] =result if search  else False
+        context['products'] = result if search else False
         context['search'] = search
         context['categories'] = Category.objects.all()
         return context
